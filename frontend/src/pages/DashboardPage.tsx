@@ -4,7 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDrives, useApplications } from '@/hooks';
-import { DriveStatusDisplay, ApplicationStatusDisplay } from '@/types';
+import { DriveStatusDisplay, ApplicationStatusDisplay, ApplicationStatusColor } from '@/types';
 
 export const DashboardPage: React.FC = () => {
   const { user } = useAuth();

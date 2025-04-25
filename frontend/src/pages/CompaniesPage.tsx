@@ -125,7 +125,7 @@ export const CompaniesPage: React.FC = () => {
           <div key={company.id} className="bg-white rounded-lg shadow p-6">
             <h3 className="text-xl font-semibold mb-2">{company.name}</h3>
             {company.website && (
-              
+              <a
                 href={company.website}
                 target="_blank"
                 rel="noopener noreferrer"
