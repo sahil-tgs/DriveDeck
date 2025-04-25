@@ -142,12 +142,9 @@ REST_FRAMEWORK = {
     # Use TokenAuthentication globally for API requests
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-        # SessionAuthentication might be useful for browsable API, keep if needed
-        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
     # Set default permission policy.
-    # IsAuthenticatedOrReadOnly allows anyone to view (GET), but only logged-in users to change (POST, PUT, DELETE)
-    # Change this later for more granular control if needed.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
@@ -160,14 +157,27 @@ REST_FRAMEWORK = {
 # For development, allow requests from the typical React dev server port
 # In production, replace this with your actual frontend domain(s)
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000", # Default React port
+    "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://localhost:5173",  # Vite default port
+    "http://127.0.0.1:5173",  # Vite default port
 ]
-# Or, for maximum simplicity in local development (less secure):
-# CORS_ALLOW_ALL_ORIGINS = True
 
-# Optional: Allow credentials (like cookies or auth tokens) to be sent
-# CORS_ALLOW_CREDENTIALS = True
+# Allow credentials for authentication tokens
+CORS_ALLOW_CREDENTIALS = True
+
+# Allow these headers
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding', 
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
 
 # Remember your AUTH_USER_MODEL setting is already here:
 AUTH_USER_MODEL = 'core.User'

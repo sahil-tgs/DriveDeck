@@ -5,10 +5,22 @@ from .models import User, StudentProfile, Company, Drive, Application
 # Note: Exposing the full User model via API needs care regarding sensitive fields like password.
 # Consider using libraries like 'djoser' for more robust user management endpoints later.
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True)
+    
     class Meta:
         model = User
-        # Select fields carefully - avoid exposing password hash etc.
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'is_student', 'is_tnp_officer']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'password', 'is_student', 'is_tnp_officer']
+        extra_kwargs = {
+            'is_tnp_officer': {'required': False, 'default': False},
+            'is_student': {'required': False, 'default': False}
+        }
+    
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
 
 
 class StudentProfileSerializer(serializers.ModelSerializer):
